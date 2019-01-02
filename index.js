@@ -11,4 +11,4 @@ app.use('/api', require('./routes/api'));
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 3000);
