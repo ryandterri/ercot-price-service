@@ -1,0 +1,275 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ercot-price-service",
+    "description": "API for getting ercot prices",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5050/api",
+      "description": "Local dev API"
+    }
+  ],
+  "paths": {
+    "/analyze": {
+      "post": {
+        "summary": "Returns an array of price points over a usage range of 300-3700",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tdu_name": {
+                    "type": "string"
+                  },
+                  "company_name": {
+                    "type": "string"
+                  },
+                  "product_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tdu_name",
+                  "company_name",
+                  "product_name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Price point array",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "usages": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "costs": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "pkwh": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/compare": {
+      "post": {
+        "summary": "Returns a report of products based on input usage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tdu_name": {
+                    "type": "string"
+                  },
+                  "company_name": {
+                    "type": "string"
+                  },
+                  "term": {
+                    "type": "integer"
+                  },
+                  "usages": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "tdu_name",
+                  "usages"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Price report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "usage_total": {
+                      "type": "integer"
+                    },
+                    "usages": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "mean": {
+                      "type": "number"
+                    },
+                    "std_dev": {
+                      "type": "number"
+                    },
+                    "avg_mean": {
+                      "type": "number"
+                    },
+                    "avg_std_dev": {
+                      "type": "number"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Name": {
+                            "type": "string"
+                          },
+                          "Company": {
+                            "type": "string"
+                          },
+                          "Term": {
+                            "type": "integer"
+                          },
+                          "Approved": {
+                            "type": "boolean"
+                          },
+                          "Price_At_500": {
+                            "type": "number'"
+                          },
+                          "Actual_Price_At_500": {
+                            "type": "number'"
+                          },
+                          "Price_At_1000": {
+                            "type": "number'"
+                          },
+                          "Actual_Price_At_1000": {
+                            "type": "number'"
+                          },
+                          "EFL": {
+                            "type": "string"
+                          },
+                          "Link": {
+                            "type": "string"
+                          },
+                          "Usage_Costs": {
+                            "type": "array",
+                            "items": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/companies": {
+      "get": {
+        "summary": "Returns an array of available company names",
+        "responses": {
+          "200": {
+            "description": "Company List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/tdus": {
+      "get": {
+        "summary": "Returns an array of available TDU names",
+        "responses": {
+          "200": {
+            "description": "TDU List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/terms": {
+      "get": {
+        "summary": "Returns an array of available term lengths",
+        "responses": {
+          "200": {
+            "description": "Term List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  }
+}

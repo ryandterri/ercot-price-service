@@ -29,16 +29,16 @@ offer_processor.get_usage_cost = function (offer, usage, tdu_charge) {
     return Math.round(usage_cost * 100) / 100;
 };
 
-offer_processor.get_usage_costs = function (offer, usages, tdu_charge) {
+offer_processor.get_usage_costs = function (offer, usages) {
     let usage_costs = [];
     usages.forEach(function (usage) {
-        let usage_cost = offer_processor.get_usage_cost(offer, usage, tdu_charge);
+        let usage_cost = offer_processor.get_usage_cost(offer, usage, offer.TDU);
         usage_costs.push(usage_cost);
     });
     return usage_costs;
 };
 
-offer_processor.process_offers = function (filtered_offers, usages, tdu_charge) {
+offer_processor.process_offers = function (filtered_offers, usages) {
     usages = _.map(usages, function (usage) {
         return parseInt(usage);
     });
@@ -62,7 +62,7 @@ offer_processor.process_offers = function (filtered_offers, usages, tdu_charge) 
             Usage_Costs: []
         };
 
-        offer_result.Usage_Costs = offer_processor.get_usage_costs(offer, usages, tdu_charge);
+        offer_result.Usage_Costs = offer_processor.get_usage_costs(offer, usages, offer.TDU);
 
         offer_result.Total = offer_result.Usage_Costs.reduce(function (total, amt) {
             return total + amt;
@@ -93,13 +93,13 @@ offer_processor.process_offers = function (filtered_offers, usages, tdu_charge) 
         }
     });
     return {
-        Usage_Total: usage_total,
-        Usages: usages,
-        Mean: mean,
-        Standard_Deviation: std_dev,
-        Avg_Mean: mean / usages.length,
-        Avg_Standard_Deviation: std_dev / usages.length,
-        Results: results
+        usage_total: usage_total,
+        usages: usages,
+        mean: mean,
+        std_dev: std_dev,
+        avg_mean: mean / usages.length,
+        avg_std_dev: std_dev / usages.length,
+        results: results
     };
 };
 

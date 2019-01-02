@@ -1,19 +1,21 @@
 const router = require('express').Router();
 const db = require('../utils/db');
 
-router.get('/', function(req, res, next) {
-    let tdus = db.get('tdus');
+router.get('/', async function (req, res, next) {
+    try {
+        const tdus = db.get('tdus');
 
-    tdus.find({})
-        .then(function(tdu_list) {
+        let tdu_list = await tdus.distinct('Name');
+        if (tdu_list) {
             res.send(tdu_list);
-        })
-        .catch(function(err) {
-            res.send(err);
-        })
-        .then(function(){
-            db.close();
-        });
+        }
+        else {
+            res.sendStatus(404);
+        }
+    }
+    catch (err) {
+        next(err);
+    }
 });
 
 module.exports = router;
