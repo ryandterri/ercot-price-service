@@ -16,6 +16,7 @@
   "homepage": "https://bitbucket.org/ryandterri/ercot-price-service#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "monk": "^6.0.6",
