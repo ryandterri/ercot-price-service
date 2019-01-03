@@ -39,10 +39,10 @@ router.post('/single', async function (req, res, next) {
 
         let filtered_offers = await offers.find(search);
         let result = offer_processor.process_offers(filtered_offers, req.body.usages);
-        let filtered = _.filter(result.Results, function (item) {
+        let filtered = _.filter(result.results, function (item) {
             return item.Term === 12;
         });
-        let lowest = _.min(filtered, function (item) {
+        let lowest = _.minBy(filtered, function (item) {
             return item.Total;
         });
         res.send(lowest);
