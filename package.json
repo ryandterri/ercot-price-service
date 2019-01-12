@@ -7,13 +7,19 @@
     "start": "node index.js",
     "test": "nyc --reporter=html --reporter=text mocha"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test",
+      "commit-msg": "validate-commit-msg"
+    }
+  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/ryandterri/ercot-price-service.git"
+    "url": "git+ssh://git@github.com/ryandterri/ercot-price-service.git"
   },
   "author": "Ryan Purcell",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/ryandterri/ercot-price-service#readme",
+  "homepage": "https://github.com/ryandterri/ercot-price-service#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
