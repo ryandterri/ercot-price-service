@@ -1,4 +1,4 @@
-FROM node:8.15-alpine
+FROM balenalib/armv7hf-alpine-node
 
 # Create app directory
 WORKDIR /usr/src/app
