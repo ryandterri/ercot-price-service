@@ -1,7 +1,7 @@
 {
   "name": "ercot-price-service",
   "version": "1.1.5",
-  "description": "Service for ercot electricity prices",
+  "description": "Service for Ercot electricity prices",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
