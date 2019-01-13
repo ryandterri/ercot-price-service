@@ -2,7 +2,7 @@ const _ = require('lodash');
 
 let offer_processor = {};
 
-offer_processor.get_usage_cost = function (offer, usage, tdu_charge) {
+offer_processor.get_usage_cost = function (offer, usage) {
     let usage_cost = 0;
     let cost_components = offer.Cost_Components;
     cost_components.forEach(function (cost_component) {
@@ -23,8 +23,8 @@ offer_processor.get_usage_cost = function (offer, usage, tdu_charge) {
         }
     });
     if (offer.Is_Bundled === undefined || offer.Is_Bundled === null || !offer.Is_Bundled) {
-        usage_cost += tdu_charge.Meter_Charge;
-        usage_cost += tdu_charge.Variable_Charge * usage;
+        usage_cost += offer.TDU.Meter_Charge;
+        usage_cost += offer.TDU.Variable_Charge * usage;
     }
     return Math.round(usage_cost * 100) / 100;
 };
@@ -62,7 +62,7 @@ offer_processor.process_offers = function (filtered_offers, usages) {
             Usage_Costs: []
         };
 
-        offer_result.Usage_Costs = offer_processor.get_usage_costs(offer, usages, offer.TDU);
+        offer_result.Usage_Costs = offer_processor.get_usage_costs(offer, usages);
 
         offer_result.Total = offer_result.Usage_Costs.reduce(function (total, amt) {
             return total + amt;
