@@ -18,7 +18,7 @@ services:
   - docker
 
 script:
-  - istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+  - nyc npm test && nyc report --reporter=text-lcov | coveralls
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - docker build -t ${DOCKER_BUILD} -f ${DOCKERFILE} .
 
