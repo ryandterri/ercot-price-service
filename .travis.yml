@@ -17,6 +17,9 @@ env:
 services:
   - docker
 
+notifications:
+  slack: ryanpurcell:lBd1hLS6Oup309ofNCEHhSnr
+
 script:
   - nyc npm test && nyc report --reporter=text-lcov | coveralls
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
