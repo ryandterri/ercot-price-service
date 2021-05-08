@@ -25,7 +25,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "monk": "^7.1.2",
     "swagger-ui-express": "^4.0.7",
     "yamljs": "^0.3.0"
